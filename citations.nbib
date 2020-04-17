@@ -1,0 +1,384 @@
+
+PMID- 30898391
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20190701
+LR  - 20200401
+IS  - 1095-6859 (Electronic)
+IS  - 0090-8258 (Linking)
+VI  - 153
+IP  - 2
+DP  - 2019 May
+TI  - Genome-wide association studies identify susceptibility loci for epithelial
+      ovarian cancer in east Asian women.
+PG  - 343-355
+LID - S0090-8258(19)30133-7 [pii]
+LID - 10.1016/j.ygyno.2019.02.023 [doi]
+AB  - OBJECTIVE: Genome-wide association studies (GWASs) for epithelial ovarian cancer 
+      (EOC) have focused largely on populations of European ancestry. We aimed to
+      identify common germline variants associated with EOC risk in Asian women.
+      METHODS: Genotyping was performed as part of the OncoArray project. Samples with 
+      >60% Asian ancestry were included in the analysis. Genotyping was performed on
+      533,631 SNPs in 3238 Asian subjects diagnosed with invasive or borderline EOC and
+      4083 unaffected controls. After imputation, genotypes were available for
+      11,595,112 SNPs to identify associations. RESULTS: At chromosome 6p25.2, SNP
+      rs7748275 was associated with risk of serous EOC (odds ratio [OR]=1.34,
+      P=8.7x10(-9)) and high-grade serous EOC (HGSOC) (OR=1.34, P=4.3x10(-9)). SNP
+      rs6902488 at 6p25.2 (r(2)=0.97 with rs7748275) lies in an active enhancer and is 
+      predicted to impact binding of STAT3, P300 and ELF1. We identified additional
+      risk loci with low Bayesian false discovery probability (BFDP) scores, indicating
+      they are likely to be true risk associations (BFDP <10%). At chromosome 20q11.22,
+      rs74272064 was associated with HGSOC risk (OR=1.27, P=9.0x10(-8)). Overall EOC
+      risk was associated with rs10260419 at chromosome 7p21.3 (OR=1.33, P=1.2x10(-7)) 
+      and rs74917072 at chromosome 2q37.3 (OR=1.25, P=4.7x10(-7)). At 2q37.3,
+      expression quantitative trait locus analysis in 404 HGSOC tissues identified
+      ESPNL as a putative candidate susceptibility gene (P=1.2x10(-7)). CONCLUSION:
+      While some risk loci were shared between East Asian and European populations,
+      others were population-specific, indicating that the landscape of EOC risk in
+      Asian women has both shared and unique features compared to women of European
+      ancestry.
+CI  - Copyright (c) 2019. Published by Elsevier Inc.
+FAU - Lawrenson, Kate
+AU  - Lawrenson K
+AD  - Women's Cancer Program at the Samuel Oschin Comprehensive Cancer Institute,
+      Cedars-Sinai Medical Center, 8700 Beverly Boulevard, Suite 290W, Los Angeles, CA,
+      USA; Center for Bioinformatics and Functional Genomics, Cedars Sinai Genomics
+      Core, Cedars-Sinai Medical Center, Los Angeles, CA, USA. Electronic address:
+      kate.lawrenson@cshs.org.
+FAU - Song, Fengju
+AU  - Song F
+AD  - National Clinical Research Center for Cancer, Tianjin Medical University Cancer
+      Institute and Hospital, Tianjin, China; Department of Epidemiology and
+      Biostatistics, Key Laboratory of Cancer Prevention and Therapy, Tianjin, China.
+FAU - Hazelett, Dennis J
+AU  - Hazelett DJ
+AD  - Center for Bioinformatics and Functional Genomics, Cedars Sinai Genomics Core,
+      Cedars-Sinai Medical Center, Los Angeles, CA, USA.
+FAU - Kar, Siddhartha P
+AU  - Kar SP
+AD  - Department of Oncology, Centre for Cancer Genetic Epidemiology, University of
+      Cambridge, Strangeways Research Laboratory, Cambridge, UK.
+FAU - Tyrer, Jonathan
+AU  - Tyrer J
+AD  - Department of Oncology, Centre for Cancer Genetic Epidemiology, University of
+      Cambridge, Strangeways Research Laboratory, Cambridge, UK.
+FAU - Phelan, Catherine M
+AU  - Phelan CM
+AD  - Department of Gynecologic Oncology, Moffitt Cancer Center, Tampa, FL, USA;
+      Department of Cancer Epidemiology, Moffitt Cancer Center, Tampa, FL, USA.
+FAU - Corona, Rosario I
+AU  - Corona RI
+AD  - Women's Cancer Program at the Samuel Oschin Comprehensive Cancer Institute,
+      Cedars-Sinai Medical Center, 8700 Beverly Boulevard, Suite 290W, Los Angeles, CA,
+      USA; Center for Bioinformatics and Functional Genomics, Cedars Sinai Genomics
+      Core, Cedars-Sinai Medical Center, Los Angeles, CA, USA.
+FAU - Rodriguez-Malave, Norma I
+AU  - Rodriguez-Malave NI
+AD  - Center for Bioinformatics and Functional Genomics, Cedars Sinai Genomics Core,
+      Cedars-Sinai Medical Center, Los Angeles, CA, USA.
+FAU - Seo, Ji-Hei
+AU  - Seo JH
+AD  - Department of Medical Oncology, Dana-Farber Cancer Institute, Boston, MA, USA.
+FAU - Adler, Emily
+AU  - Adler E
+AD  - Department of Preventive Medicine, University of Southern California, Keck School
+      of Medicine, 1450 Biggy Street, Los Angeles, CA, USA.
+FAU - Coetzee, Simon G
+AU  - Coetzee SG
+AD  - Center for Bioinformatics and Functional Genomics, Cedars Sinai Genomics Core,
+      Cedars-Sinai Medical Center, Los Angeles, CA, USA.
+FAU - Segato, Felipe
+AU  - Segato F
+AD  - Department of Genetics, Ribeirao Preto Medical School, University of Sao Paulo,
+      14049-900, Brazil.
+FAU - Fonseca, Marcos A S
+AU  - Fonseca MAS
+AD  - Department of Genetics, Ribeirao Preto Medical School, University of Sao Paulo,
+      14049-900, Brazil.
+FAU - Amos, Christopher I
+AU  - Amos CI
+AD  - Institute for Clinical and Translational Research, Department of Medicine, Baylor
+      School of Medicine, Houston,TX, USA.
+FAU - Carney, Michael E
+AU  - Carney ME
+AD  - Department of Obstetrics and Gynecology, John A. Burns School of Medicine,
+      University of Hawaii, Honolulu, HI, USA.
+FAU - Chenevix-Trench, Georgia
+AU  - Chenevix-Trench G
+AD  - Genetics and Computational Biology Department, QIMR Berghofer Medical Research
+      Institute, 300 Herston Road, Herston, QLD 4006, Australia.
+FAU - Choi, Jiyeob
+AU  - Choi J
+AD  - Department of Preventive Medicine, Seoul National University College of Medicine,
+      Seoul, Republic of Korea; Cancer Research Institute, Seoul National University,
+      Seoul, Republic of Korea; Department of Biomedical Science, Graduate School,
+      Seoul National University, Seoul, Republic of Korea.
+FAU - Doherty, Jennifer A
+AU  - Doherty JA
+AD  - Jon M. and Karen Huntsman Endowed Associate Professor in Cancer Research Huntsman
+      Cancer Institute, Department of Population Health Sciences, University of Utah,
+      USA.
+FAU - Jia, Weihua
+AU  - Jia W
+AD  - State Key Laboratory of Oncology in Southern China, Cancer Center, Sun Yat-sen
+      University, Guangzhou, Guangdong 510060, China.
+FAU - Jin, Gang J
+AU  - Jin GJ
+AD  - ShanghaiBio Corporation, Shanghai, China; CloudHealth Genomics Ltd, Shanghai,
+      China.
+FAU - Kim, Byoung-Gie
+AU  - Kim BG
+AD  - Department of Obstetrics and Gynecology, Samsung Medical Center, Sungkyunkwan
+      University, School of Medicine, Republic of Korea.
+FAU - Le, Nhu D
+AU  - Le ND
+AD  - Cancer Control Research, BC Cancer Agency, Vancouver, BC, Canada.
+FAU - Lee, Juyeon
+AU  - Lee J
+AD  - Department of Preventive Medicine, Seoul National University College of Medicine,
+      Seoul, Republic of Korea; Department of Biomedical Science, Graduate School,
+      Seoul National University, 103 Daehak-ro, Jongno-gu, Seoul 110-799, Republic of
+      Korea.
+FAU - Li, Lian
+AU  - Li L
+AD  - National Clinical Research Center for Cancer, Tianjin Medical University Cancer
+      Institute and Hospital, Tianjin, China; Department of Epidemiology and
+      Biostatistics, Key Laboratory of Cancer Prevention and Therapy, Tianjin, China.
+FAU - Lim, Boon K
+AU  - Lim BK
+AD  - The Department of Obstetrics and Gynaecology, Faculty of Medicine, University of 
+      Malaya, Kuala Lumpur, Malaysia.
+FAU - Adenan, Noor A
+AU  - Adenan NA
+AD  - The Department of Obstetrics and Gynaecology, Faculty of Medicine, University of 
+      Malaya, Kuala Lumpur, Malaysia.
+FAU - Mizuno, Mika
+AU  - Mizuno M
+AD  - Department of Gynecological Oncology, Aichi Cancer Center Hospital, Japan.
+FAU - Park, Boyoung
+AU  - Park B
+AD  - Department of Preventive Medicine, College of Medicine, Hanyang, Seoul, Republic 
+      of Korea.
+FAU - Pearce, Celeste L
+AU  - Pearce CL
+AD  - Department of Epidemiology, University of Michigan School of Public Health, Ann
+      Arbor, MI, USA.
+FAU - Shan, Kang
+AU  - Shan K
+AD  - Department of Obstetrics and Gynaecology,Hebei Medical University, Fourth
+      Hospital, Shijiazhuang, China.
+FAU - Shi, Yongyong
+AU  - Shi Y
+AD  - Bio-X Institutes, Key Laboratory for the Genetics of Developmental and
+      Neuropsychiatric Disorders, Ministry of Education, Shanghai Jiao Tong University,
+      Shanghai, China.
+FAU - Shu, Xiao-Ou
+AU  - Shu XO
+AD  - Division of Epidemiology, Department of Medicine, Vanderbilt-Ingram Cancer
+      Center, Vanderbilt University School of Medicine, Nashville, TN, USA.
+FAU - Sieh, Weiva
+AU  - Sieh W
+AD  - Department of Population Health Science and Policy, Department of Genetics and
+      Genomic Sciences, Icahn School of Medicine at Mount Sinai, New York, NY, USA.
+CN  - Australian Ovarian Cancer Study Group
+AD  - Peter MacCallum Cancer Institute, Melbourne, Australia.
+FAU - Thompson, Pamela J
+AU  - Thompson PJ
+AD  - Cancer Prevention and Control, Samuel Oschin Comprehensive Cancer Institute,
+      Cedars-Sinai Medical Center, Los Angeles, CA, USA.
+FAU - Wilkens, Lynne R
+AU  - Wilkens LR
+AD  - Cancer Epidemiology Program, University of Hawaii Cancer Center, HI, USA.
+FAU - Wei, Qingyi
+AU  - Wei Q
+AD  - Cancer Institute, Fudan University Shanghai Cancer Center, Shanghai 200032,
+      China; Duke Cancer Institute, Duke University Medical Center, Durham, NC 27710,
+      USA.
+FAU - Woo, Yin L
+AU  - Woo YL
+AD  - The Department of Obstetrics and Gynaecology, Faculty of Medicine, University of 
+      Malaya, Kuala Lumpur, Malaysia.
+FAU - Yan, Li
+AU  - Yan L
+AD  - Department of Molecular Biology, Hebei Medical University, Fourth Hospital,
+      Shijiazhuang, China.
+FAU - Karlan, Beth Y
+AU  - Karlan BY
+AD  - Women's Cancer Program at the Samuel Oschin Comprehensive Cancer Institute,
+      Cedars-Sinai Medical Center, 8700 Beverly Boulevard, Suite 290W, Los Angeles, CA,
+      USA.
+FAU - Freedman, Matthew L
+AU  - Freedman ML
+AD  - Department of Medical Oncology, Dana-Farber Cancer Institute, Boston, MA, USA.
+FAU - Noushmehr, Houtan
+AU  - Noushmehr H
+AD  - Department of Genetics, Ribeirao Preto Medical School, University of Sao Paulo,
+      14049-900, Brazil; Department of Neurosurgery, Henry Ford Health System, Detroit,
+      MI, USA.
+FAU - Goode, Ellen L
+AU  - Goode EL
+AD  - Department of Health Science Research, Division of Epidemiology, Mayo Clinic,
+      Rochester, MN, USA.
+FAU - Berchuck, Andrew
+AU  - Berchuck A
+AD  - Department of Obstetrics and Gynecology, Duke University Medical Center, Durham, 
+      NC, USA.
+FAU - Sellers, Thomas A
+AU  - Sellers TA
+AD  - Department of Cancer Epidemiology, Moffitt Cancer Center, Tampa, FL, USA.
+FAU - Teo, Soo-Hwang
+AU  - Teo SH
+AD  - Cancer Research Initiatives Foundation, Subang Jaya, Selangor, Malaysia.
+FAU - Zheng, Wei
+AU  - Zheng W
+AD  - Division of Epidemiology, Department of Medicine, Vanderbilt-Ingram Cancer
+      Center, Vanderbilt University School of Medicine, Nashville, TN, USA.
+FAU - Matsuo, Keitaro
+AU  - Matsuo K
+AD  - Division of Molecular and Clinical Epidemiology, Aichi Cancer Center Research
+      Institute, Japan.
+FAU - Park, Sue
+AU  - Park S
+AD  - Department of Preventive Medicine, Seoul National University College of Medicine,
+      Seoul, Republic of Korea; Cancer Research Institute, Seoul National University,
+      Seoul, Republic of Korea; Department of Biomedical Science, Graduate School,
+      Seoul National University, Seoul, Republic of Korea.
+FAU - Chen, Kexin
+AU  - Chen K
+AD  - National Clinical Research Center for Cancer, Tianjin Medical University Cancer
+      Institute and Hospital, Tianjin, China; Department of Epidemiology and
+      Biostatistics, Key Laboratory of Cancer Prevention and Therapy, Tianjin, China.
+FAU - Pharoah, Paul D P
+AU  - Pharoah PDP
+AD  - Department of Oncology, Centre for Cancer Genetic Epidemiology, University of
+      Cambridge, Strangeways Research Laboratory, Cambridge, UK; Centre for Cancer
+      Genetic Epidemiology, Department of Public Health and Primary Care, University of
+      Cambridge, Strangeways Research Laboratory, Worts Causeway, Cambridge, UK.
+FAU - Gayther, Simon A
+AU  - Gayther SA
+AD  - Center for Bioinformatics and Functional Genomics, Cedars Sinai Genomics Core,
+      Cedars-Sinai Medical Center, Los Angeles, CA, USA.
+FAU - Goodman, Marc T
+AU  - Goodman MT
+AD  - Cancer Prevention and Control, Samuel Oschin Comprehensive Cancer Institute,
+      Cedars-Sinai Medical Center, Los Angeles, CA, USA; Community and Population
+      Health Research Institute, Department of Biomedical Sciences, Cedars-Sinai
+      Medical Center, Los Angeles, CA, USA.
+LA  - eng
+GR  - U01 CA069417/CA/NCI NIH HHS/United States
+GR  - UL1 TR000445/TR/NCATS NIH HHS/United States
+GR  - R01 CA058860/CA/NCI NIH HHS/United States
+GR  - G1000143/MRC_/Medical Research Council/United Kingdom
+GR  - R01 CA128978/CA/NCI NIH HHS/United States
+GR  - P30 CA076292/CA/NCI NIH HHS/United States
+GR  - P50 CA116201/CA/NCI NIH HHS/United States
+GR  - R01 CA160669/CA/NCI NIH HHS/United States
+GR  - U19 CA148112/CA/NCI NIH HHS/United States
+GR  - 10124/CRUK_/Cancer Research UK/United Kingdom
+GR  - R01 CA176785/CA/NCI NIH HHS/United States
+GR  - N01 PC067010/PC/NCI NIH HHS/United States
+GR  - P50 CA159981/CA/NCI NIH HHS/United States
+GR  - P30 CA016056/CA/NCI NIH HHS/United States
+GR  - R01 CA087538/CA/NCI NIH HHS/United States
+GR  - C570/A16491 /CRUK_/Cancer Research UK/United Kingdom
+GR  - C1287/A10710/CRUK_/Cancer Research UK/United Kingdom
+GR  - P01 CA087969/CA/NCI NIH HHS/United States
+GR  - 14136/CRUK_/Cancer Research UK/United Kingdom
+GR  - R01 CA067262/CA/NCI NIH HHS/United States
+GR  - M01 RR000056/RR/NCRR NIH HHS/United States
+GR  - R01 CA095023/CA/NCI NIH HHS/United States
+GR  - C490/A10119/CRUK_/Cancer Research UK/United Kingdom
+GR  - UM1 CA176726/CA/NCI NIH HHS/United States
+GR  - C8221/A19170 /CRUK_/Cancer Research UK/United Kingdom
+GR  - R03 CA113148/CA/NCI NIH HHS/United States
+GR  - R01 CA058598/CA/NCI NIH HHS/United States
+GR  - DH_/Department of Health/United Kingdom
+GR  - R01 CA211707/CA/NCI NIH HHS/United States
+GR  - S10 RR025141/RR/NCRR NIH HHS/United States
+GR  - C12292/A11174/CRUK_/Cancer Research UK/United Kingdom
+GR  - C490/A10124 /CRUK_/Cancer Research UK/United Kingdom
+GR  - R01 CA063678/CA/NCI NIH HHS/United States
+GR  - R00 CA184415/CA/NCI NIH HHS/United States
+GR  - 076113/WT_/Wellcome Trust/United Kingdom
+GR  - UL1 TR000124/TR/NCATS NIH HHS/United States
+GR  - P50 CA105009/CA/NCI NIH HHS/United States
+GR  - 1000143/MRC_/Medical Research Council/United Kingdom
+GR  - K07 CA080668/CA/NCI NIH HHS/United States
+GR  - R01 CA141154/CA/NCI NIH HHS/United States
+GR  - P30 CA014089/CA/NCI NIH HHS/United States
+GR  - U19 CA148537/CA/NCI NIH HHS/United States
+GR  - R21 CA220078/CA/NCI NIH HHS/United States
+GR  - R01 AG061132/AG/NIA NIH HHS/United States
+GR  - R01 CA116167/CA/NCI NIH HHS/United States
+GR  - R01 CA063464/CA/NCI NIH HHS/United States
+GR  - R03 CA115195/CA/NCI NIH HHS/United States
+GR  - UM1 CA186107/CA/NCI NIH HHS/United States
+GR  - MR/M012190/1/MRC_/Medical Research Council/United Kingdom
+GR  - MOP-86727/CIHR/Canada
+GR  - R01 CA054419/CA/NCI NIH HHS/United States
+GR  - R01 CA122443/CA/NCI NIH HHS/United States
+GR  - P30 CA015083/CA/NCI NIH HHS/United States
+GR  - R01 CA076016/CA/NCI NIH HHS/United States
+GR  - R01 CA054281/CA/NCI NIH HHS/United States
+GR  - R01 CA149429/CA/NCI NIH HHS/United States
+GR  - P01 CA017054/CA/NCI NIH HHS/United States
+GR  - N01 CN025403/CA/NCI NIH HHS/United States
+GR  - Z01 ES044005/ImNIH/Intramural NIH HHS/United States
+GR  - U19 CA148065/CA/NCI NIH HHS/United States
+GR  - WT_/Wellcome Trust/United Kingdom
+GR  - R01 CA049449/CA/NCI NIH HHS/United States
+GR  - R01 CA063682/CA/NCI NIH HHS/United States
+GR  - UL1 TR001881/TR/NCATS NIH HHS/United States
+GR  - UM1 CA182910/CA/NCI NIH HHS/United States
+GR  - C1287/A10118/CRUK_/Cancer Research UK/United Kingdom
+GR  - C490/A8339/CRUK_/Cancer Research UK/United Kingdom
+GR  - P30 CA071789/CA/NCI NIH HHS/United States
+GR  - R01 CA112523/CA/NCI NIH HHS/United States
+GR  - U01 CA164973/CA/NCI NIH HHS/United States
+GR  - P50 CA136393/CA/NCI NIH HHS/United States
+GR  - R01 CA126841/CA/NCI NIH HHS/United States
+GR  - R01 CA114343/CA/NCI NIH HHS/United States
+PT  - Journal Article
+PT  - Research Support, N.I.H., Extramural
+PT  - Research Support, N.I.H., Intramural
+PT  - Research Support, Non-U.S. Gov't
+PT  - Research Support, U.S. Gov't, Non-P.H.S.
+DEP - 20190319
+PL  - United States
+TA  - Gynecol Oncol
+JT  - Gynecologic oncology
+JID - 0365304
+SB  - IM
+MH  - Asian Continental Ancestry Group/genetics
+MH  - Base Sequence
+MH  - Carcinoma, Ovarian Epithelial/*genetics
+MH  - Case-Control Studies
+MH  - Female
+MH  - Genetic Predisposition to Disease
+MH  - Genome-Wide Association Study
+MH  - Humans
+MH  - Polymorphism, Single Nucleotide
+MH  - Quantitative Trait Loci
+PMC - PMC6754211
+MID - NIHMS1040651
+OTO - NOTNLM
+OT  - *Asian ancestry
+OT  - *Enhancer
+OT  - *Epithelial ovarian cancer
+OT  - *Gene regulation
+OT  - *Genome-wide association study
+OT  - *eQTL
+EDAT- 2019/03/23 06:00
+MHDA- 2019/07/02 06:00
+CRDT- 2019/03/23 06:00
+PHST- 2018/10/24 00:00 [received]
+PHST- 2019/02/20 00:00 [revised]
+PHST- 2019/02/21 00:00 [accepted]
+PHST- 2019/03/23 06:00 [pubmed]
+PHST- 2019/07/02 06:00 [medline]
+PHST- 2019/03/23 06:00 [entrez]
+AID - S0090-8258(19)30133-7 [pii]
+AID - 10.1016/j.ygyno.2019.02.023 [doi]
+PST - ppublish
+SO  - Gynecol Oncol. 2019 May;153(2):343-355. doi: 10.1016/j.ygyno.2019.02.023. Epub
+      2019 Mar 19.

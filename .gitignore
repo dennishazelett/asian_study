@@ -1,0 +1,16 @@
+biofeatures/*.bed
+biofeatures/*.narrowPeak
+merged_replicates_original_files/*.narrowPeak
+merged_replicates_original_files/*.bed
+*.xlsx
+*.pdf
+unnamed_bkg_SNPs.txt
+.RData
+.Rhistory
+*.html
+*.Rda
+capturestack.ps
+plots/
+snps.txt
+*.gz
+*~

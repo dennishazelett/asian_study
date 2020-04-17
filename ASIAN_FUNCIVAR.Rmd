@@ -1,0 +1,322 @@
+---
+title: "Genetic association with ovarian cancer in Asian populations"
+author: "Dennis Hazelett"
+date: "12/7/2017"
+output:
+  html_document:
+    code_folding: show
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RColorBrewer)
+library(biomaRt)
+library(ggplot2)
+library(GenomicRanges)
+library(pheatmap)
+library(tidyr)
+library(dplyr)
+library(rstan)
+library(ggridges)
+library(ggthemes)
+library(SummarizedExperiment)
+source("https://bioconductor.org/biocLite.R")
+#biocLite("Simon-Coetzee/funciVar", suppressUpdates = TRUE, force = TRUE, dependencies = TRUE)
+library(funciVar)
+setwd("/Users/hazelettd/Projects/GWAS/OVARIAN_CANCER/ASIAN_STUDY/")
+```
+
+## Functional enrichment of associated variants in epigenetic data sets {.tabset .tabset-fade .tabset-pills} 
+
+### Data import & munging
+
+The main goal of this first section is to import two datasets--a foreground and background SNP list--and convert them to GRanges objects friendly to funcivar analysis. The foreground consists of Bayesian False Discovery Probability <0.5 SNPs from the study from X regions, and the background list includes all imputed SNPs of the surrounding 1MB at those regions. These lists were obtained from Johnathan Tyrer at U. Cambridge, UK.
+
+Let's get started with the foreground list. We need to import the list of names and genome interval locations from a file called "bfdp05.list" and transform it into a GenomicRanges object.
+
+```{r echo=TRUE, warning=FALSE}
+fg <- read.delim(file="bfdp05.list", header = TRUE) # foreground list
+fg <- mutate(fg, chrom_label=paste("chr", Chromosome, sep=""))
+fg$chrom_label[fg$chrom_label=="chr23"] <- "chrX"
+fg.gr <- GRanges(seqnames = fg$chrom_label,
+                 ranges = IRanges(start = fg$Position,
+                                  end = fg$Position),
+                 strand = "*")
+fg.gr$blockStarts <- start(fg.gr)
+fg.gr$blockStarts <- start(fg.gr)
+fg.gr$blockSizes <- end(fg.gr)-start(fg.gr)+1
+## for bdfp < 0.5 SNPs "effect"=allele1, "baseline"=allele2
+values(fg.gr) <- DataFrame(label=fg$SNP, linkage_group=fg$Chromosome, 
+                           allele1=fg$Effect, 
+                           allele2=fg$Baseline,
+                           blockStarts=start(fg.gr),
+                           blockSizes=end(fg.gr)-start(fg.gr))
+```
+
+Next we'll do similar for the backgroung list. The background variants consist of all the variants within 1 MB flanking on either side of the primary signal for which associations were tested. This list is kept in a file called "Selected_SNP_regions.txt". To format it for funciVAR we need to import it and recreate it as a GenomicRanges object:
+
+```{r echo=TRUE,warning=FALSE}
+bg <- read.delim(file = "Selected_SNP_regions.txt", header = TRUE) # background list
+bg <- mutate(bg, chrom_label=paste("chr", Chromosome, sep = ""))
+bg$chrom_label[bg$chrom_label=="chr23"] <- "chrX"
+bg.gr <- GRanges(seqnames = bg$chrom_label,
+                 ranges = IRanges(start = bg$Position,
+                                  end = bg$Position),
+                 strand = "*")
+values(bg.gr) <- DataFrame(label=bg$SNP, linkage_group=bg$Chromosome, 
+                           allele1 = bg$A1, 
+                           allele2 = bg$A2, 
+                           blockStarts=start(bg.gr),
+                           blockSizes=end(bg.gr)-start(bg.gr))
+
+background.bed <- list(seqnames = seqnames(bg.gr), starts = start(bg.gr), ends = end(bg.gr), names = mcols(bg.gr)$label)
+cat("browser position chr1:157878955-158078955\ntrack name='ASIAN BKG SNPS' description='Background SNPs for Ovarian Cancer study in Asian population'\n", file = "asian_oc_background.hg19.bed")
+write.table(background.bed, file = "asian_oc_background.hg19.bed", sep = '\t', row.names = FALSE, col.names = FALSE, quote = FALSE, append = TRUE)
+```
+#### Sanity check
+
+Let's check whether any of the foreground SNPs overlap background, i.e. are they a subset. Then we'll assign them to a variants object.
+
+```{r echo=TRUE, show=FALSE}
+overlaps.mat <- findOverlaps(fg.gr, bg.gr)
+length(queryHits(overlaps.mat))
+length(fg.gr)
+length(bg.gr)
+unique(seqnames(bg.gr))
+aoc.variants <- list(fg=fg.gr, bg=bg.gr)
+```
+
+From this it appears that yes, foreground is a subset of background. There are a greater number of queryHits than query rows because some variants are larger than one nucleotide and can overlap more than one row in the subject.
+
+#### Annotations
+
+The annotations are mostly in-house generated epigenomics data from prior studies, rather than the StateHub treatments of Roadmap data that we typically use. I import these using the "GetSegmentations()" functionality of funciVar.
+
+```{r}
+annos <- list.files("biofeatures", full.names = TRUE)
+biofeatures <- GetBioFeatures(files=annos, genome="hg19") # hang on! this will take a while
+```
+
+### Enrichment analysis
+
+#### Global enrichment
+
+First we'll execute the standard global enrichment analysis that funciVar does, plotting enrichment values for each set of epigenetics data on and individual basis.
+
+```{r show=FALSE, fig_height=5, fig_width=7}
+enrichment <- CalculateEnrichment(aoc.variants, biofeatures, feature.type="biofeatures", CI = 0.95, return.overlaps = TRUE)
+#save(aoc.variants, biofeatures, file="asiandata.Rda")
+global.plot <- PlotEnrichment(enrichment$enrichment, value = "difference", color.by = NULL) + 
+  ggtitle("Global Enrichment")
+#ggsave(filename = "plots/global_enrichment_plot.pdf", plot = global.plot, device = "pdf", width = 18, height = 12, units = "in")
+#ggsave(filename = "plots/global_enrichment_plot.png", plot = global.plot, device = "png", dpi = 300, width = 18, height = 12, units = "in")
+```
+
+Next we'll create our overlap matrix for export as a supplementary table (ST7).
+
+```{r include=FALSE, show=FALSE}
+overlaps.mat <- mcols(enrichment$overlaps$foreground.overlaps) # clobbers previous instance of overlaps.mat
+write.csv(overlaps.mat, file="foreground_overlaps.csv", quote = FALSE, row.names = FALSE)
+fg.track <- list(chrom=seqnames(fg.gr), start = start(fg.gr), end = end(fg.gr), label = mcols(fg.gr)$label)
+cat("browser position chr6:3571487-3588186\ntrack name='OVC BDFP 0.5' description='Ovarian cancer genetic associations (Bayes False Discovery Prob < 0.5)' visibility=pack\n", file = "foreground_snps.bed")
+write.table(fg.track, file = "foreground_snps.bed", sep = "\t", row.names = FALSE, quote = FALSE, append = TRUE, col.names = FALSE)
+```
+
+#### Locus-by-locus enrichment
+
+Next we want to see whether individual loci are enriched for particular samples, using the same background SNPs as in the global analysis. We'll have to define the extent of each locus and then subset the SNP lists so that we can repeat a funciVar analysis on this smaller set. The individual loci are defined in a file called "regions.txt"
+
+```{r show=FALSE}
+locus <- with(read.delim(file="regions.txt", sep="\t"), GRanges(seqnames = seqnames, ranges = IRanges(start = start, end = end), region = region))
+
+#define a function to create an enrichment analysis for all SNPs that overlap an interval in the locus table
+l<-dim(enrichment$enrichment)[1]
+w<-length(locus)
+enrichment.mat <- list(probability = data.frame(matrix(NA, nrow = l, ncol = w+1)), # +1 extra column=global
+                       difference  = data.frame(matrix(NA, nrow = l, ncol = w+1)))
+rownames(enrichment.mat$probability) <- rownames(enrichment$enrichment)
+colnames(enrichment.mat$probability) <- c("global", as.character(locus$region))
+rownames(enrichment.mat$difference) <- rownames(enrichment$enrichment)
+colnames(enrichment.mat$difference) <- c("global", as.character(locus$region))
+
+enrichment.mat$probability$global <- unlist(enrichment$enrichment$probability)
+enrichment.mat$difference$global <- unlist(enrichment$enrichment$difference)
+
+
+for (a in 1:w) {
+  print(paste(as.character(locus[a]$region)[1], "Enrichment", sep=" "))
+  locus.variants <- list(fg=fg.gr[subjectHits(findOverlaps(locus[a], fg.gr))],
+                         bg=bg.gr[subjectHits(findOverlaps(locus[a], bg.gr))])
+  a.locus <- CalculateEnrichment(locus.variants, biofeatures, feature.type="biofeatures", CI = 0.95, return.overlaps = FALSE)
+  enrichment.mat$probability[rownames(a.locus),a+1] <- a.locus$probability
+  enrichment.mat$difference[rownames(a.locus),a+1] <- a.locus$difference
+  a.plot <- PlotEnrichment(a.locus, value = "difference", color.by = NULL) + ggtitle(paste(locus[a]$region[1], "enrichment", sep=" "))
+  ggsave(filename = paste("plots/allmarks/", locus[a]$region[1], ".pdf", sep=""), plot = a.plot, device = "pdf", width = 18, height = 12, units = "in")
+  ggsave(filename = paste("plots/allmarks/", locus[a]$region[1], ".png", sep=""), plot = a.plot, device = "png", width = 18, height = 12, units = "in")
+}
+
+annos.meta <- data.frame(read.delim("Asian_samplenames.csv", sep = ',', row.names = 1))[rownames(enrichment.mat$probability),]
+annos.meta$Global <- enrichment$enrichment$probability
+annos.meta$log1pGlobal <- log1p(enrichment$enrichment$probability)
+annos.meta$GlobalDiff <- enrichment$enrichment$difference
+
+
+ann_colors <- list(
+  Classification  = c(CCOC      = "#66C2A5",
+                      EnOC      = "#FC8D62",
+                      HGSOC     = "#8DA0CB",
+                      MOC       = "#E78AC3",
+                      OC        = "#A6D854",
+                      Other     = "#FFD92F",
+                      Precursor = "#E5C494"),
+  Feature         = c(CTCF      = "#7FC97F",
+                      H3K27ac   = "#BEAED4",
+                      H3K4me1   = "#FDC086",
+                      H3K4me3   = "#FFFF99",
+                      NDR       = "#386CB0",
+                      PAX8      = "#F0027F"),
+  Tissue.CellLine = c(CL = "black", T = "white"),
+  Global          = colorRampPalette(c("grey", "white", "firebrick3"),bias=0.025)(280),
+  log1pGlobal     = colorRampPalette(c("grey", "white", "firebrick3"),bias=0.025)(280),
+  GlobalDiff      = colorRampPalette(c("grey", "white", "firebrick3"),bias=0.025)(280)
+)
+?colorRampPalette
+
+pheatmap(enrichment.mat$difference[,2:w], labels_row = as.character(annos.meta$SampleName), annotation_row = annos.meta[,c("GlobalDiff", "Classification", "Feature", "Tissue.CellLine")], main = "Biofeature enrichment by locus (diff w/ bkg)", filename = "plots/locus_heat_allmarks_diff.png", res = 92, width = 14, height = 14, color = colorRampPalette(c("grey", "white", "firebrick3"),bias=2.5)(280), annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(
+  log1p(enrichment.mat$probability)[,2:w], 
+  labels_row = as.character(annos.meta$SampleName), 
+  annotation_row = annos.meta[,c("log1pGlobal", "Classification", "Feature", "Tissue.CellLine")], 
+  main = "Biofeature enrichment by locus (log1p)", 
+  filename = "plots/locus_heat_allmarks_logp.png", 
+  res = 92, width = 14, height = 14, 
+  color = colorRampPalette(c("grey", "white", "firebrick3"),bias=0.025)(280), 
+  annotation_colors = ann_colors, clustering_method = "ward.D2")
+row.names(enrichment.mat$probability)
+
+
+svg("plots/locus_heat_allmarks_logp.svg")
+pheatmap(log1p(enrichment.mat$probability)[,2:w], labels_row = as.character(annos.meta$SampleName), annotation_row = annos.meta[,c("log1pGlobal", "Classification", "Feature", "Tissue.CellLine")], main = "Biofeature enrichment by locus (log1p)", width = 1500, height = 1500, units = 'px', color = colorRampPalette(c("grey", "white", "firebrick3"),bias=0.025)(280), annotation_colors = ann_colors, clustering_method = "ward.D2")
+dev.off()
+```
+
+### HM-specific analyses
+
+#### Histone-specific enrichment for H3K27ac
+
+```{r}
+h3k4me1  <- c(3, 11, 13, 28, 31, 34, 37, 40, 70)
+h3k27ac  <- c(2, 4:8, 10, 15, 17, 18, 21:27, 33, 36, 39, 47:51, 55:60, 63:67, 69)
+h3k4me3  <- c(12, 16, 19)
+dhsfaire <- c(1, 9, 14, 29, 32, 35, 38, 68, 71)
+ctcf     <- c(20, 45, 53, 54, 61, 62)
+pax8     <- c(41:44, 46, 52, 72, 73)
+pax8     <- c(41:44, 46, 52, 72, 73)
+
+
+levels(annos.meta$Classification)
+
+pheatmap(log1p(enrichment.mat$probability[h3k27ac,2:w]), labels_row = as.character(annos.meta$SampleName[h3k27ac]), annotation_row = annos.meta[h3k27ac, c("log1pGlobal", "Classification", "Tissue.CellLine")], main = "H3K27Ac enrichment", color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[h3k27ac,2:w]), labels_row = as.character(annos.meta$SampleName[h3k27ac]), annotation_row = annos.meta[h3k27ac, c("log1pGlobal", "Classification", "Tissue.CellLine")], filename = "plots/locus_heat_h3k27ac.png", res = 92, width = 14, height = 10, color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "H3K27Ac enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[h3k27ac,2:w]), labels_row = as.character(annos.meta$SampleName[h3k27ac]), annotation_row = annos.meta[h3k27ac, c("log1pGlobal", "Classification", "Tissue.CellLine")], filename = "plots/locus_heat_h3k27ac.pdf", width = 14, height = 10, color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "H3K27Ac enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[h3k4me1,2:w]), labels_row = as.character(annos.meta$SampleName[h3k4me1]), annotation_row = annos.meta[h3k4me1, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "H3K4me1 enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[h3k4me1,2:w]), labels_row = as.character(annos.meta$SampleName[h3k4me1]), annotation_row = annos.meta[h3k4me1, c("log1pGlobal", "Classification", "Tissue.CellLine")], filename = "plots/locus_heat_h3k4me1.png", res = 92, width = 14, height = 4, color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "H3K4me1 enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[dhsfaire,2:w]), labels_row = as.character(annos.meta$SampleName[dhsfaire]), annotation_row = annos.meta[dhsfaire, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "DHS and FAIRE enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[dhsfaire,2:w]), labels_row = as.character(annos.meta$SampleName[dhsfaire]), annotation_row = annos.meta[dhsfaire, c("log1pGlobal", "Classification", "Tissue.CellLine")], filename = "plots/locus_heat_dhsfaire.png", res = 92, width = 14, height = 4, color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "DHS and FAIRE enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+#pheatmap(log1p(enrichment.mat$probability[pax8,2:w]), labels_row = as.character(annos.meta$SampleName[pax8]), annotation_row = annos.meta[pax8, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "PAX8 ChIP-seq enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+#pheatmap(log1p(enrichment.mat$probability[pax8,2:w]), labels_row = as.character(annos.meta$SampleName[pax8]), annotation_row = annos.meta[pax8, c("log1pGlobal", "Classification", "Feature", "Tissue.CellLine")], filename = "plots/locus_heat_pax8.png", res = 92, width = 14, height = 10, color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "Pax8 ChIP-seq enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[ctcf,2:w]), labels_row = as.character(annos.meta$SampleName[ctcf]), annotation_row = annos.meta[ctcf, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "CTCF ChIP-seq enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[ctcf,2:w]), labels_row = as.character(annos.meta$SampleName[ctcf]), annotation_row = annos.meta[ctcf, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), filename = "plots/locus_heat_ctcf.png", res = 92, width = 14, height = 3.4, annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[h3k4me3,2:w]), labels_row = as.character(annos.meta$SampleName[h3k4me3]), annotation_row = annos.meta[h3k4me3, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), main = "H3K4me3 enrichment", annotation_colors = ann_colors, clustering_method = "ward.D2")
+
+pheatmap(log1p(enrichment.mat$probability[h3k4me3,2:w]), labels_row = as.character(annos.meta$SampleName[h3k4me3]), annotation_row = annos.meta[h3k4me3, c("log1pGlobal", "Classification", "Tissue.CellLine")], color = colorRampPalette(c("grey", "white", "firebrick3"), bias=0.025)(280), filename = "plots/locus_heat_h3k4me3.png", res = 92, width = 14, height = 2.5, annotation_colors = ann_colors, clustering_method = "ward.D2")
+```
+
+
+
+### Motif Disruption
+
+#### CTCF disruptions 2q37 locus.
+
+```{r eval=FALSE, include=FALSE, show=FALSE}
+devtools::install_github("Simon-Coetzee/motifBreakR")
+
+library(motifbreakR)
+library(BSgenome.Hsapiens.UCSC.hg19)
+library("SNPlocs.Hsapiens.dbSNP144.GRCh37")
+data("motifbreakR_motif")
+
+chr2q37rsid <- c("rs7564440", "rs10929255", "rs1026037") # "rs34307842" not in db
+chr2q37snp <- snps.from.rsid(chr2q37rsid, dbSNP = SNPlocs.Hsapiens.dbSNP144.GRCh37, search.genome = BSgenome.Hsapiens.UCSC.hg19)
+
+chr2results <- motifbreakR(snpList = chr2q37snp, filterp = TRUE,
+                           pwmList = motifbreakR_motif,
+                           threshold = 1e-4,
+                           method = "ic",
+                           bkg = c(A=0.3, C=0.2, G=0.2, T=0.3),
+                           BPPARAM = BiocParallel::bpparam())
+
+chr2results
+calculatePvalue(results = chr2results, pwmList = motifbreakR_motif, background = c(A=0.3, C=0.2, G=0.2, T=0.3))
+```
+
+```{r}
+chr3p23rsid <- c("rs78128478", "rs72852148", "rs13315140", "rs9838910", "rs72851820", "rs13322224", "rs72583592", "rs11922484", "rs28568660")
+
+chr3p23snps <- snps.from.rsid(chr3p23rsid, dbSNP = SNPlocs.Hsapiens.dbSNP144.GRCh37, search.genome = BSgenome.Hsapiens.UCSC.hg19)
+
+chr3results <- motifbreakR(snpList = chr3p23snps, filterp = TRUE,
+                           pwmList = motifbreakR_motif,
+                           threshold = 5e-5,
+                           method = "ic",
+                           bkg = c(A=0.28, C=0.22, G=0.22, T=0.28),
+                           BPPARAM = BiocParallel::bpparam())
+
+options("showHeadLines"=15)
+options("showTailLines"=NULL)
+
+chr3results[names(chr3results) %in% "rs78128478"]
+chr3results[names(chr3results) %in% "rs72852148"]
+chr3results[names(chr3results) %in% "rs72851820"] # no result
+chr3results[names(chr3results) %in% "rs9838910"]
+chr3results[names(chr3results) %in% "rs13322224"]
+chr3results[names(chr3results) %in% "rs13315140"] # no result
+chr3results[names(chr3results) %in% "rs72583592"] # no result
+chr3results[names(chr3results) %in% "rs11922484"]
+chr3results[names(chr3results) %in% "rs28568660"] # no result
+
+
+```
+
+
+#### Locus 6q25.2
+
+```{r}
+rs6902488snp <- snps.from.rsid("rs6902488", dbSNP = SNPlocs.Hsapiens.dbSNP144.GRCh37, search.genome = BSgenome.Hsapiens.UCSC.hg19)
+
+rs6902488 <- motifbreakR(snpList = rs6902488snp, filterp = T,
+                         pwmList = encodemotif,
+                         threshold = 5e-5,
+                         method = "ic",
+                         bkg = c(A=0.28, C=0.22, G=0.22, T=0.28),
+                         BPPARAM = BiocParallel::bpparam())
+
+rs6902488 <- calculatePvalue(rs6902488, background = c(A=0.28, C=0.22, G=0.22, T=0.28))
+
+pdf(file = "plots/rs6902488_MBplot.pdf")
+plotMB(rs6902488, rsid = "rs6902488")
+dev.off()
+```
